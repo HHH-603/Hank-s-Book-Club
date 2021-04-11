@@ -9,6 +9,30 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
+      resolve: "gatsby-firesource",
+      options: {
+        credential: require("./firebase.json"),
+        types: [
+          {
+            type: "Book",
+            collection: "books",
+            map: (doc) => ({
+              title: doc.title,
+              summary: doc.summary,
+              author__NODE: doc.author.id,
+            }),
+          },
+          {
+            type: "Author",
+            collection: "authors",
+            map: (doc) => ({
+              name: doc.name,
+            }),
+          },
+        ],
+      },
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/icon.png",
